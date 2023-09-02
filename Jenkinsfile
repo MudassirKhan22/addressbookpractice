@@ -43,23 +43,30 @@ pipeline {
         }
         
          stage('Package') {
-            agent {label 'linux-slave1'}
-            steps {
-                sh "mvn package"
-                echo "Deploying app version:${params.Appversion}"
-            }  
+            //agent {label 'linux-slave1'}
+           
+                steps {
+                    script{
+                        sshagent(['build-server-key']){
+                            sh "mvn package"
+                            echo "Deploying app version:${params.Appversion}"
+                        }
+                    }
+                } 
+
+             
         }
 
         stage('Deploy'){
             agent {label 'linux-slave2'}
 
-        input{
-                    message "Please approve to deploy"
-                    ok "Yes, we should."
-                    parameters{
-                        choice(name:'Newversion',choices:['1.1','1.2','1.3'],description:'Version to deploy')
-                    }
-            }
+                input{ 
+                        message "Please approve to deploy"
+                        ok "Yes, we should."
+                        parameters{
+                            choice(name:'Newversion',choices:['1.1','1.2','1.3'],description:'Version to deploy')
+                        }
+                }
 
 
             steps{
