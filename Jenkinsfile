@@ -52,15 +52,17 @@ pipeline {
 
         stage('Deploy'){
             agent {label 'linux-slave2'}
-            steps{
-                input{
+
+        input{
                     message "Please approve to deploy"
                     ok "Yes, we should."
                     parameters{
                         choice(name:'Newversion',choices:['1.1','1.2','1.3'],description:'Version to deploy')
                     }
-                }
+            }
 
+
+            steps{
                 echo "Deploying to test"
             }
         }
