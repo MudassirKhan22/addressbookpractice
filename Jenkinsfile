@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent none
 
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
@@ -15,6 +15,7 @@ pipeline {
 
     stages {
         stage('Compile') {
+            agent any
             steps {
                 
                 git 'https://github.com/MudassirKhan22/addressbookpractice.git'
@@ -26,7 +27,7 @@ pipeline {
         }
         
          stage('Test') {
-
+            agent any
             when{
                 expression{
                     params.executeTest==true
@@ -42,7 +43,7 @@ pipeline {
         }
         
          stage('Package') {
-
+            agent {label 'linux-slave1'}
             steps {
                 sh "mvn package"
                 echo "Deploying app version:${params.Appversion}"
@@ -50,6 +51,7 @@ pipeline {
         }
 
         stage('Deploy'){
+            agent {label 'linux-slave2'}
             steps{
                 input{
                     message "Please approve to deploy"
