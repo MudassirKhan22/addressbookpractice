@@ -49,8 +49,8 @@ pipeline {
                 steps {
                     script{
                         sshagent(['build-server-key']){
+                            sh "ssh ec2user@172.31.13.140"
                             sh "mvn package"
-
                             echo "Deploying app version:${params.Appversion}"
                         }
                     }
