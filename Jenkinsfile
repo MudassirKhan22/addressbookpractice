@@ -6,50 +6,47 @@ pipeline {
         maven "mymaven"
     }
 
+    parameters{
+        string(name:'Env',defaultValue:'Test',description:'Env to deploy')
+        booleanParam(name:'executeTest',defaultValue:true,description:'Decide to tun TC')
+        choice(name:'Appversion',choices:['1.1','1.2','1.3'],description:'List of app versions')
+    
+    }
+
     stages {
         stage('Compile') {
             steps {
-                // Get some code from a GitHub repository
+                
                 git 'https://github.com/MudassirKhan22/addressbookpractice.git'
-
-                // Run Maven on a Unix agent.
                 sh "mvn compile"
-
-                // To run Maven on a Windows agent, use
-                // bat "mvn -Dmaven.test.failure.ignore=true clean package"
+                echo "Env to deploy:${params.Env}"
             }
 
            
         }
         
          stage('Test') {
-            steps {
-                // Get some code from a GitHub repository
-               
 
-                // Run Maven on a Unix agent.
+            when{
+                expression{
+                    params.executeTest==true
+                }
+            }
+
+            //When the "when" condition becomes true then only it will run the test cases.
+            steps { 
                 sh "mvn test"
-
-                // To run Maven on a Windows agent, use
-                // bat "mvn -Dmaven.test.failure.ignore=true clean package"
             }
 
            
         }
         
          stage('Package') {
+
             steps {
-                // Get some code from a GitHub repository
-               
-
-                // Run Maven on a Unix agent.
                 sh "mvn package"
-
-                // To run Maven on a Windows agent, use
-                // bat "mvn -Dmaven.test.failure.ignore=true clean package"
-            }
-
-           
+                echo "Deploying app version:${params.Appversion}"
+            }  
         }
     }
 }
