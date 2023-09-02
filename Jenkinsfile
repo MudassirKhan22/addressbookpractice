@@ -57,10 +57,11 @@ pipeline {
                     message "Please approve to deploy"
                     ok "Yes, we should."
                     parameters{
-                        choice(name:'Appversion',choices:['1.1','1.2','1.3'],description:'Veraion to deploy')
+                        choice(name:'Newversion',choices:['1.1','1.2','1.3'],description:'Version to deploy')
                     }
-
                 }
+
+                echo "Deploying to test"
             }
         }
     }
