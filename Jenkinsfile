@@ -48,5 +48,18 @@ pipeline {
                 echo "Deploying app version:${params.Appversion}"
             }  
         }
+
+        stage('Deploy'){
+            steps{
+                input{
+                    message "Please approve to deploy"
+                    ok "Yes, we should."
+                    parameters{
+                        choice(name:'Appversion',choices:['1.1','1.2','1.3'],description:'Veraion to deploy')
+                    }
+
+                }
+            }
+        }
     }
 }
