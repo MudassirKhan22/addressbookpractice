@@ -14,7 +14,7 @@ pipeline {
     }
 
     environment{
-        BUILD_SERVER_IP=ec2-user@172.31.13.140
+        BUILD_SERVER_IP='ec2-user@172.31.13.140'
     }
 
     stages {
