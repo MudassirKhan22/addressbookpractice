@@ -6,6 +6,7 @@ sudo yum install maven -y
 if [ -d "addressbookpractice" ]
 then
     echo "Repository is already cloned and exist"
+    cd /home/ec2-user/addressbookpractice
     git pull origin Practice
 else
 git clone https://github.com/MudassirKhan22/addressbookpractice.git
