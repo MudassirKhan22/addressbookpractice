@@ -57,14 +57,14 @@ pipeline {
                             
                             //Copy the server-config.sh file on slave2 so that slave2 have the 
                             //server-config.sh file before hand to install the tools which we conigured in server-config.sh
-                            sh "scp -o StrictHostKeyChecking=no sever-config.sh ${BUILD_SERVER_IP}:/home/ec2-user"
+                            sh "scp -o StrictHostKeyChecking=no server-config.sh ${BUILD_SERVER_IP}:/home/ec2-user"
 
 
                             //Before packaging the code on the slave2 first of all we need to 
                             //have the required tools on the slave2. To get the required tools on
                             //slave2 we will install the tools and to install the tools we write
                             //the commands in a separate file called server-config.sh
-                            sh "ssh o StrictHostKeyChecking=no ${BUILD_SERVER_IP} 'bash /home/ec2-user/server-config.sh'"
+                            sh "ssh -o StrictHostKeyChecking=no ${BUILD_SERVER_IP} 'bash /home/ec2-user/server-config.sh'"
                             echo "Deploying app version:${params.Appversion}"
                         }
                     }
