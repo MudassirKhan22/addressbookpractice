@@ -3,7 +3,7 @@ sudo yum install java-1.8.0-openjdk-devel
 sudo yum install git -y
 sudo yum install maven -y
 
-if[ -d "addressbookpractice" ]
+if [ -d "addressbookpractice" ]
 then
     echo "Repository is already cloned and exist"
     git pull origin Practice
